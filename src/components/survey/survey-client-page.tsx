@@ -7,6 +7,7 @@ import { submitSurveyAction } from "@/app/actions";
 import type { SurveyFormValues } from "@/lib/types";
 import type { RecommendCareersOutput } from "@/ai/flows/recommend-careers";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { BarChart, Loader2, AlertTriangle, ThumbsUp } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 

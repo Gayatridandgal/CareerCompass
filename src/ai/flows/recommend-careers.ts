@@ -2,6 +2,7 @@
 'use server';
 /**
  * @fileOverview An AI agent that recommends career paths based on student inputs.
+ * This version uses a simplified, rule-based "local model" instead of an LLM.
  *
  * - recommendCareers - A function that handles the career recommendation process.
  * - RecommendCareersInput - The input type for the recommendCareers function.
@@ -32,6 +33,78 @@ export async function recommendCareers(input: RecommendCareersInput): Promise<Re
   return recommendCareersFlow(input);
 }
 
+// Define a Genkit tool that acts as our simplified "local model"
+const simpleCareerPredictorTool = ai.defineTool(
+  {
+    name: 'simpleCareerPredictorTool',
+    description: 'A simplified rule-based model to predict career paths based on student inputs.',
+    inputSchema: RecommendCareersInputSchema,
+    outputSchema: RecommendCareersOutputSchema,
+  },
+  async (input: RecommendCareersInput): Promise<RecommendCareersOutput> => {
+    const recommendations: RecommendCareersOutput = [];
+    const interestsLower = input.interests.toLowerCase();
+    const subjectsLower = input.subjects.toLowerCase();
+    const strengthsLower = input.strengths.toLowerCase();
+
+    if (interestsLower.includes('coding') || subjectsLower.includes('computer science') || strengthsLower.includes('problem solving')) {
+      recommendations.push({
+        careerName: 'Software Developer (Rule-Based Model)',
+        description: 'Designs, develops, and maintains software applications. This recommendation is from a simplified rule-based model.',
+        fitScore: 85,
+        strengthsAlignment: `Your inputs (Interests: '${input.interests}', Subjects: '${input.subjects}', Strengths: '${input.strengths}') suggest a good fit for software development due to analytical and technical aspects.`,
+      });
+    }
+
+    if (interestsLower.includes('art') || interestsLower.includes('design') || subjectsLower.includes('art') || strengthsLower.includes('creative')) {
+      recommendations.push({
+        careerName: 'Graphic Designer (Rule-Based Model)',
+        description: 'Creates visual concepts to communicate ideas that inspire, inform, or captivate consumers. This recommendation is from a simplified rule-based model.',
+        fitScore: 80,
+        strengthsAlignment: `Your artistic interests ('${input.interests}') and creative strengths ('${input.strengths}') align well with graphic design.`,
+      });
+    }
+    
+    if (interestsLower.includes('helping others') || subjectsLower.includes('psychology') || strengthsLower.includes('empathy')) {
+      recommendations.push({
+        careerName: 'Social Worker (Rule-Based Model)',
+        description: 'Helps individuals, families, and groups cope with problems in their everyday lives. This recommendation is from a simplified rule-based model.',
+        fitScore: 78,
+        strengthsAlignment: `Your desire to help others ('${input.interests}') and empathetic strengths ('${input.strengths}') are valuable in social work.`,
+      });
+    }
+
+    if (recommendations.length === 0) {
+      recommendations.push({
+        careerName: 'General Project Coordinator (Rule-Based Model)',
+        description: 'Coordinates projects and ensures they run smoothly. This is a general suggestion from a simplified rule-based model.',
+        fitScore: 65,
+        strengthsAlignment: `Your listed subjects ('${input.subjects}') and general strengths ('${input.strengths}') can be applied to project coordination.`,
+      });
+    }
+    
+    // Ensure a consistent number of recommendations, filling with a generic one if needed
+    while (recommendations.length < 2 && recommendations.length < 3) {
+        let alreadyRecommended = recommendations.find(r => r.careerName.includes('General Analyst'));
+        if (!alreadyRecommended) {
+             recommendations.push({
+                careerName: 'General Analyst (Rule-Based Model)',
+                description: 'Analyzes data and provides insights for various fields. This recommendation is from a simplified rule-based model.',
+                fitScore: 70,
+                strengthsAlignment: `Your analytical skills highlighted in subjects ('${input.subjects}') and strengths ('${input.strengths}') could be applied to an analyst role.`,
+            });
+        } else {
+            break; // Avoid infinite loop if all general roles are somehow exhausted or duplicated
+        }
+    }
+
+
+    return recommendations.slice(0, 3); // Return up to 3 recommendations
+  }
+);
+
+// The prompt is no longer needed as we are using the local tool.
+/*
 const prompt = ai.definePrompt({
   name: 'recommendCareersPrompt',
   input: {schema: RecommendCareersInputSchema},
@@ -56,6 +129,7 @@ const prompt = ai.definePrompt({
   ]
   `,
 });
+*/
 
 const recommendCareersFlow = ai.defineFlow(
   {
@@ -63,8 +137,9 @@ const recommendCareersFlow = ai.defineFlow(
     inputSchema: RecommendCareersInputSchema,
     outputSchema: RecommendCareersOutputSchema,
   },
-  async input => {
-    const {output} = await prompt(input);
-    return output!;
+  async (input: RecommendCareersInput) => {
+    // Call the simpleCareerPredictorTool instead of the LLM prompt
+    const recommendations = await simpleCareerPredictorTool(input);
+    return recommendations;
   }
 );

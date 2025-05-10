@@ -1,13 +1,10 @@
 # CareerCompass - Your AI-Powered Career Guidance Platform
 
-![CareerCompass Hero](https://via.placeholder.com/1200x600.png?text=CareerCompass+Application+Screenshot)
-*(Replace this with a compelling screenshot of your application's main page)*
 
 ## Table of Contents
 
 - [Introduction](#introduction)
 - [Features](#features)
-- [Screenshots](#screenshots)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Environment Setup](#environment-setup)
@@ -18,8 +15,6 @@
 - [Technologies Used](#technologies-used)
 - [Project Structure](#project-structure)
 - [AI Integration with Genkit](#ai-integration-with-genkit)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Introduction
 
@@ -36,25 +31,6 @@ This project leverages Next.js for the frontend and Firebase Genkit for AI-power
 - **Modern, Responsive UI:** Built with Next.js, TypeScript, and ShadCN UI components for a clean and accessible user experience on all devices.
 - **Server-Side Logic with Genkit Flows:** AI interactions are handled by robust Genkit flows, ensuring efficient and scalable processing.
 
-## Screenshots
-
-*(Please replace these placeholders with actual screenshots of your application)*
-
-**1. Home Page / Survey Introduction**
-![Survey Page Screenshot](https://via.placeholder.com/800x450.png?text=Survey+Page)
-*Caption: The initial survey page where users input their details.*
-
-**2. Survey in Progress**
-![Survey In Progress Screenshot](https://via.placeholder.com/800x450.png?text=Survey+In+Progress)
-*Caption: User filling out the career survey.*
-
-**3. Results Page / Career Recommendations**
-![Results Page Screenshot](https://via.placeholder.com/800x450.png?text=Career+Recommendations)
-*Caption: AI-generated career recommendations based on survey responses.*
-
-**4. Detailed Career View (if applicable)**
-![Detailed Career View Screenshot](https://via.placeholder.com/800x450.png?text=Detailed+Career+View)
-*Caption: More information about a specific suggested career.*
 
 ## Getting Started
 
@@ -64,7 +40,6 @@ Follow these instructions to set up and run the project locally.
 
 - [Node.js](https://nodejs.org/) (v18.x or later recommended)
 - [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
-- [Firebase Account](https://firebase.google.com/) (for Genkit and potentially other Firebase services)
 - [Google Cloud Project](https://console.cloud.google.com/) with the Vertex AI API enabled.
 
 ### Environment Setup
@@ -203,24 +178,5 @@ This application uses Firebase Genkit to power its AI features. Key aspects incl
 
 The `careerSuggestionFlow` (example name) likely takes user inputs from the survey, constructs a prompt for the Gemini model, and processes the model's output to generate structured career advice.
 
-## Contributing
-
-Contributions are welcome! If you'd like to contribute, please follow these steps:
-
-1.  Fork the repository.
-2.  Create a new branch (`git checkout -b feature/your-feature-name`).
-3.  Make your changes.
-4.  Commit your changes (`git commit -m 'Add some feature'`).
-5.  Push to the branch (`git push origin feature/your-feature-name`).
-6.  Open a Pull Request.
-
-Please ensure your code adheres to the project's coding standards and includes tests where applicable.
-
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for details (if one exists, otherwise specify).
-
----
-
 Happy Hacking! We hope CareerCompass helps many find their ideal career path.
-If you have any questions or feedback, please open an issue on GitHub.
+

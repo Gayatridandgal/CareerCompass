@@ -1,4 +1,5 @@
-# CareerCompass - Your AI-Powered Career Guidance Platform
+# CareerCompass 
+AI-Powered Career Guidance Platform
 
 
 ## Table of Contents
